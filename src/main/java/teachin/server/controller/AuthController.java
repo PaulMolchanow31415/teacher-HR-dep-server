@@ -27,9 +27,9 @@ public class AuthController {
         }
     }
 
-   @PostMapping("/create_account")
+    @PostMapping("/create_account")
     public ResponseEntity<BaseRes> register(@RequestBody @Valid HRAccount account) {
-        try{
+        try {
             service.createAccount(account);
             return ResponseEntity.ok(new BaseRes(true, "Пользователь успешно создан"));
         } catch (Exception e) {
@@ -37,8 +37,18 @@ public class AuthController {
         }
     }
 
-    @DeleteMapping("/disable")
-    public ResponseEntity<BaseRes> disable(String username) {
+    @PutMapping("/activate")
+    public ResponseEntity<BaseRes> activate(@RequestParam String username) {
+        try {
+            service.activate(username);
+            return ResponseEntity.ok(new BaseRes(true, "Аккаунт активирован"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new BaseRes(false, e.getMessage()));
+        }
+    }
+
+    @PutMapping("/disable")
+    public ResponseEntity<BaseRes> disable(@RequestParam String username) {
         try {
             service.disable(username);
             return ResponseEntity.ok(new BaseRes(true, "Аккаунт отключен"));

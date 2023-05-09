@@ -2,7 +2,7 @@ package teachin.server.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Table(name = "teacher")
 public class Teacher extends AbstractEmployee {
     @NotNull
@@ -24,9 +24,9 @@ public class Teacher extends AbstractEmployee {
     private ScientificDegree scientificDegree;
 
     @NotNull
-    @Min(1)
+    @Min(value = 1, message = "Количество часов должно быть не меньше одного")
     private Integer hours;
 
-    @Length(min = 2, message = "Длина строки общественной работы должна превосходить 2 символа")
+    @Length(min = 2, message = "Длина строки общественной работы должна быть не меньше 2 символов")
     private String socialWork;
 }

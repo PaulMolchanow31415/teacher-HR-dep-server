@@ -19,7 +19,7 @@ import java.util.Base64;
 import java.util.Date;
 
 @Component
-public class JWTTokenProvider {
+public class JWTokenProvider {
     @Getter
     private final UserDetailsService userDetailsService;
     @Value("${jwt.secret}")
@@ -29,7 +29,7 @@ public class JWTTokenProvider {
     @Value("${jwt.expiration}")
     private long expiration;
 
-    public JWTTokenProvider(@Qualifier("teachin_hr_account_service") UserDetailsService service) {
+    public JWTokenProvider(@Qualifier("teachin_hr_account_service") UserDetailsService service) {
         this.userDetailsService = service;
     }
 

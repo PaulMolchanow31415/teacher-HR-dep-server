@@ -8,10 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
+@Getter
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
     @Id
-    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 }

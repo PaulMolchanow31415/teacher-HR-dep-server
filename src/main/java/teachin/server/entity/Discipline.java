@@ -2,7 +2,7 @@ package teachin.server.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Table(name = "discipline")
 public class Discipline extends AbstractEntity {
     @NotNull

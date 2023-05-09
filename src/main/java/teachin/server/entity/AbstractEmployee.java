@@ -4,7 +4,6 @@ package teachin.server.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -33,6 +32,6 @@ public abstract class AbstractEmployee extends AbstractEntity {
     protected Passport passport;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(orphanRemoval = true)
     protected List<Moonlighter> moonlighters;
 }
