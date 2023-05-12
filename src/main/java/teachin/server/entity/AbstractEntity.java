@@ -1,5 +1,6 @@
 package teachin.server.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
+    @ApiModelProperty(notes = "Идентификатор")
     @Id
     @GeneratedValue(strategy = IDENTITY)
     protected Long id;

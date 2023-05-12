@@ -1,5 +1,7 @@
 package teachin.server.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import teachin.server.service.AuthService;
 
 import javax.validation.Valid;
 
+@Api(description = "Контроллер для управления аккауном")
 @RestController
 @RequestMapping("api/v1/auth")
 public class AuthController {
@@ -19,6 +22,7 @@ public class AuthController {
         this.service = service;
     }
 
+    @ApiOperation("Вход в аккаунт")
     @PostMapping("/login")
     public ResponseEntity<BaseRes> login(@RequestBody LoginReq loginReq) {
         try {
@@ -28,6 +32,7 @@ public class AuthController {
         }
     }
 
+    @ApiOperation("Создание нового аккаунта")
     @PostMapping("/create_account")
     @PreAuthorize("hasAuthority('write')")
     public ResponseEntity<BaseRes> register(@RequestBody @Valid HRAccount account) {
@@ -39,6 +44,7 @@ public class AuthController {
         }
     }
 
+    @ApiOperation("Отключение аккаунта, (при срабатывании, аккаунт становится недейстивительным)")
     @PutMapping("/activate")
     @PreAuthorize("hasAuthority('write')")
     public ResponseEntity<BaseRes> activate(@RequestParam String username) {
@@ -50,6 +56,7 @@ public class AuthController {
         }
     }
 
+    @ApiOperation("Активация аккаунта")
     @PutMapping("/disable")
     @PreAuthorize("hasAuthority('write')")
     public ResponseEntity<BaseRes> disable(@RequestParam String username) {

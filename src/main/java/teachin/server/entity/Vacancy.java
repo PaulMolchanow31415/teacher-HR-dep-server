@@ -1,6 +1,7 @@
 package teachin.server.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,11 +22,13 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor
 @Table(name = "vacancy")
 public class Vacancy extends AbstractEntity {
+    @ApiModelProperty(notes = "Название", required = true)
     @NotNull
     @NotBlank(message = "Название вакансии не должно содержать только пробелы")
     @Length(min = 3, message = "Название вакансии должно содержать не менее 3 символов")
     private String name;
 
+    @ApiModelProperty(notes = "Список дисциплин")
     @JsonIgnore
     @OneToMany(fetch = LAZY)
     private Set<Discipline> disciplines;

@@ -1,5 +1,7 @@
 package teachin.server.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import teachin.server.service.DisciplineService;
 
 @RestController
 @RequestMapping("api/v1/discipline")
+@Api(description = "Управление дисциплинами")
 public class DisciplineController extends AbstractController<Discipline, DisciplineService> {
     protected DisciplineController(DisciplineService service) {
         super(service);
@@ -21,6 +24,7 @@ public class DisciplineController extends AbstractController<Discipline, Discipl
     /**
      * 5. Возварщает всех преподавателей, занятых конкретной дисциплиной
      */
+    @ApiOperation("Возварщает всех преподавателей, занятых конкретной дисциплиной")
     @GetMapping("/list_of_engaged_teachers")
     @PreAuthorize("hasAuthority('read')")
     public ResponseEntity<?> listEngagedInDiscipline(@RequestParam String discipline) {
