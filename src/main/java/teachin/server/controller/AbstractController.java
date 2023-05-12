@@ -52,7 +52,7 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
     public ResponseEntity<BaseRes> deleteById(Long id) {
         try {
             service.erase(id);
-            return ResponseEntity.ok(new BaseRes(true, "The %s has been deleted".formatted(NAME_ENTITY)));
+            return ResponseEntity.ok(new BaseRes(true, "The %s has been deleted by id".formatted(NAME_ENTITY)));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new BaseRes(false, e.getMessage()));
         }

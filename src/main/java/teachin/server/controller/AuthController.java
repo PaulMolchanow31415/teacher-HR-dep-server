@@ -1,6 +1,7 @@
 package teachin.server.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import teachin.server.entity.HRAccount;
 import teachin.server.req.LoginReq;
@@ -28,6 +29,7 @@ public class AuthController {
     }
 
     @PostMapping("/create_account")
+    @PreAuthorize("hasAuthority('write')")
     public ResponseEntity<BaseRes> register(@RequestBody @Valid HRAccount account) {
         try {
             service.createAccount(account);
@@ -38,6 +40,7 @@ public class AuthController {
     }
 
     @PutMapping("/activate")
+    @PreAuthorize("hasAuthority('write')")
     public ResponseEntity<BaseRes> activate(@RequestParam String username) {
         try {
             service.activate(username);
@@ -48,6 +51,7 @@ public class AuthController {
     }
 
     @PutMapping("/disable")
+    @PreAuthorize("hasAuthority('write')")
     public ResponseEntity<BaseRes> disable(@RequestParam String username) {
         try {
             service.disable(username);

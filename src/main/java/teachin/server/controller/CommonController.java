@@ -1,26 +1,33 @@
 package teachin.server.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import teachin.server.entity.AbstractEntity;
 import teachin.server.res.BaseRes;
 import teachin.server.res.EntityRes;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 public interface CommonController <E extends AbstractEntity> {
     @PostMapping("/create")
-    ResponseEntity<EntityRes<E>> save(@RequestBody E entity);
+    @PreAuthorize("hasAuthority('write')")
+    ResponseEntity<EntityRes<E>> save(@RequestBody @Valid E entity);
 
     @GetMapping("/list")
+    @PreAuthorize("hasAuthority('read')")
     ResponseEntity<BaseRes> getAll();
 
     @PutMapping("/update")
-    ResponseEntity<BaseRes> update(@RequestBody E entity);
+    @PreAuthorize("hasAuthority('write')")
+    ResponseEntity<BaseRes> update(@RequestBody @Valid E entity);
 
     @DeleteMapping("/delete")
-    ResponseEntity<BaseRes> delete(@RequestBody E entity);
+    @PreAuthorize("hasAuthority('write')")
+    ResponseEntity<BaseRes> delete(@RequestBody @Valid E entity);
 
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<BaseRes> deleteById(@NotNull @PathVariable Long id);
+    @PreAuthorize("hasAuthority('write')")
+    ResponseEntity<BaseRes> deleteById(@PathVariable @NotNull Long id);
 }

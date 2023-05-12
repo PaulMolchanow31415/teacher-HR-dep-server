@@ -41,9 +41,10 @@ public class AuthService {
     }
 
     public void createAccount(HRAccount account) throws ValidationException, AlreadyExistException {
-        ValidationUtils.validate(account);
         if (repo.findByUsername(account.getUsername()).isPresent())
             throw new AlreadyExistException("Пользователь с таким именем уже создан");
+
+        ValidationUtils.validate(account);
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         account.setStatus(Status.ACTIVE);
         repo.save(account);
@@ -52,6 +53,7 @@ public class AuthService {
     public void activate(String username) throws NotFoundException {
         HRAccount account = repo.findByUsername(username).orElseThrow(() ->
                 new NotFoundException("Пользователя с таким именем не существует"));
+
         account.setStatus(Status.ACTIVE);
         repo.save(account);
     }
@@ -59,6 +61,7 @@ public class AuthService {
     public void disable(String username) throws NotFoundException {
         HRAccount account = repo.findByUsername(username).orElseThrow(() ->
                 new NotFoundException("Пользователя с таким именем не существует"));
+
         account.setStatus(Status.DISABLE);
         repo.save(account);
     }

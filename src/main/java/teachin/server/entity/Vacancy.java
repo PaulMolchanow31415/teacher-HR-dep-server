@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -28,5 +28,5 @@ public class Vacancy extends AbstractEntity {
 
     @JsonIgnore
     @OneToMany(fetch = LAZY)
-    private List<Discipline> disciplines;
+    private Set<Discipline> disciplines;
 }
