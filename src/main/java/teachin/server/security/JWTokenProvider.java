@@ -29,7 +29,7 @@ public class JWTokenProvider {
     @Value("${jwt.expiration}")
     private long expiration;
 
-    public JWTokenProvider(@Qualifier("teachin_hr_account_service") UserDetailsService service) {
+    public JWTokenProvider(@Qualifier("hr_account_service") UserDetailsService service) {
         this.userDetailsService = service;
     }
 

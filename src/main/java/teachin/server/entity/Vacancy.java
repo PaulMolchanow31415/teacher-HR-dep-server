@@ -13,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @AllArgsConstructor
@@ -20,11 +22,11 @@ import java.util.List;
 @Table(name = "vacancy")
 public class Vacancy extends AbstractEntity {
     @NotNull
-    @NotBlank
+    @NotBlank(message = "Название вакансии не должно содержать только пробелы")
     @Length(min = 3, message = "Название вакансии должно содержать не менее 3 символов")
     private String name;
 
     @JsonIgnore
-    @OneToMany(orphanRemoval = true)
+    @OneToMany(fetch = LAZY)
     private List<Discipline> disciplines;
 }

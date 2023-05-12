@@ -9,18 +9,20 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import static javax.persistence.EnumType.STRING;
+
 @Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "teacher")
 public class Teacher extends AbstractEmployee {
-    @NotNull
+    @NotNull(message = "У преподавателя обязательно поле должности")
     @OneToOne
     private Vacancy vacancy;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private ScientificDegree scientificDegree;
 
     @NotNull

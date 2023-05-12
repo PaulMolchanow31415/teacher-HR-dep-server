@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Getter
 @MappedSuperclass
 public abstract class AbstractEmployee extends AbstractEntity {
@@ -32,6 +34,6 @@ public abstract class AbstractEmployee extends AbstractEntity {
     protected Passport passport;
 
     @JsonIgnore
-    @OneToMany(orphanRemoval = true)
+    @OneToMany(fetch = LAZY)
     protected List<Moonlighter> moonlighters;
 }

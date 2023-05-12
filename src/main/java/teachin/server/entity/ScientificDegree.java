@@ -3,9 +3,9 @@ package teachin.server.entity;
 import lombok.Getter;
 
 public enum ScientificDegree {
-    CANDIDATE("candidate"),
-    DOCTOR("doctor"),
-    NO("no");
+    CANDIDATE("кандидат"),
+    DOCTOR("доктор"),
+    NO("нет");
 
     @Getter
     private final String scientificDegree;

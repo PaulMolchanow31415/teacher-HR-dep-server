@@ -34,7 +34,7 @@ public class JWTokenFilter extends GenericFilterBean {
             }
         } catch (Exception e) {
             SecurityContextHolder.clearContext();
-            servletResponse.getWriter().write("{\"success\":false, \"message\": \"Token is invalid\"}");
+            servletResponse.getOutputStream().print("{\"success\":false, \"message\": \"Неправильный токен\"}");
         } finally {
             filterChain.doFilter(servletRequest, servletResponse);
         }

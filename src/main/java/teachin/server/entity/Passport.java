@@ -32,7 +32,7 @@ public class Passport extends AbstractEntity {
     private Date dateOfIssue;
 
     @NotNull
-    @NotBlank
+    @NotBlank(message = "Строка выдачи паспорта не должна содержать только пробелы")
     @Min(value = 2, message = "Длина строки выдачи паспорта должна быть не меньше 2 и состоять только из непробельных символов")
     @Column(name = "issuing_authority")
     private String issuingAuthority;

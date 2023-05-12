@@ -3,15 +3,16 @@ package teachin.server.entity;
 import lombok.Getter;
 
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Getter
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     protected Long id;
 }

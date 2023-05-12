@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "discipline")
 public class Discipline extends AbstractEntity {
     @NotNull
+    @NotBlank(message = "Название дисциплины не должно содерать только пробелы")
     @Length(min = 2, max = 255, message = "Название дисциплины должно быть в диапазоне от 2 - 255 символов")
     private String name;
 }

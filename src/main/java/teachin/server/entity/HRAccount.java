@@ -16,6 +16,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+import static javax.persistence.EnumType.STRING;
+
 @Entity
 @Getter
 @Setter
@@ -25,20 +27,20 @@ import java.util.Date;
 @Table(name = "hr_account")
 public class HRAccount extends AbstractEntity {
     @NotNull
-    @NotBlank
+    @NotBlank(message = "Логин не должен содержать только пробелы")
     @Length(min = 2, max = 32, message = "Длина логина должна быть не меньше 2 и не длиннее 32")
     private String username;
 
     @NotNull
-    @NotBlank
+    @NotBlank(message = "Пароль не должен содержать только пробелы")
     @Length(min = 4, max = 255, message = "Длина пароля должна быть не меньше 4 и не длиннее 255")
     private String password;
 
     @NotNull
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(STRING)
     private Role role;
 
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(STRING)
     private Status status;
 
     @CreatedDate

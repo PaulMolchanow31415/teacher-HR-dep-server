@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import teachin.server.entity.HRAccount;
 import teachin.server.repo.HRAccountRepo;
 
-@Service("teachin_hr_account_service")
+@Service("hr_account_service")
 public class HRAccountDetailsService implements UserDetailsService {
     private final HRAccountRepo repo;
 
