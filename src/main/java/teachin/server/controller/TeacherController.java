@@ -9,23 +9,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import teachin.server.entity.Teacher;
+import teachin.server.entity.Vacancy;
 import teachin.server.res.BaseRes;
 import teachin.server.res.EntityRes;
 import teachin.server.res.ListRes;
 import teachin.server.service.TeacherService;
+import teachin.server.service.VacancyService;
+
+import java.util.List;
 
 @Api(description = "Управление данными преподавателей")
 @RestController
 @RequestMapping("api/v1/teacher")
 public class TeacherController extends AbstractController<Teacher, TeacherService> {
-    protected TeacherController(TeacherService service) {
+    private final VacancyService vacancyService;
+
+    protected TeacherController(TeacherService service, VacancyService vacancyService) {
         super(service);
+        this.vacancyService = vacancyService;
     }
 
-    /**
-     * 1. Возварщает список всех преподавателей, имеющих ученую степень кандидата или доктора наук
-     */
-    @ApiOperation("Возварщает список всех преподавателей, имеющих ученую степень кандидата или доктора наук")
+    @ApiOperation("1. Возварщает список всех преподавателей, имеющих ученую степень кандидата или доктора наук")
     @GetMapping("/find_all_by_sci-degree")
     @PreAuthorize("hasAuthority('read')")
     public ResponseEntity<?> listFromSciDegree(@RequestParam String degree) {
@@ -39,10 +43,7 @@ public class TeacherController extends AbstractController<Teacher, TeacherServic
         }
     }
 
-    /**
-     * 2. Возварщает список преподавателей, имеющих определенную должность
-     */
-    @ApiOperation("Возварщает список преподавателей, имеющих определенную должность")
+    @ApiOperation("2. Возварщает список преподавателей, имеющих определенную должность")
     @GetMapping("/find_all_by_certain_position")
     @PreAuthorize("hasAuthority('read')")
     public ResponseEntity<?> findByCertainPosition(@RequestParam String position) {
@@ -56,10 +57,7 @@ public class TeacherController extends AbstractController<Teacher, TeacherServic
         }
     }
 
-    /**
-     * 3. Возварщает список всех дисциплин, на которых работают преподаватель по его имени,фамилии или отчеству
-     */
-    @ApiOperation("Возварщает список всех дисциплин, на которых работают преподаватель по его имени,фамилии или отчеству")
+    @ApiOperation("3. Возварщает список всех дисциплин, на которых работают преподаватель по его имени,фамилии или отчеству")
     @GetMapping("/list_disciplines_by_fio")
     @PreAuthorize("hasAuthority('read')")
     public ResponseEntity<?> listDisciplinesByFIO(@RequestParam String fio) {
@@ -73,10 +71,7 @@ public class TeacherController extends AbstractController<Teacher, TeacherServic
         }
     }
 
-    /**
-     * 4. Возварщает список преподавателей, задействованных в общественной работе
-     */
-    @ApiOperation("Возварщает список преподавателей, задействованных в общественной работе")
+    @ApiOperation("4. Возварщает список преподавателей, задействованных в общественной работе")
     @GetMapping("/list_part-timers")
     @PreAuthorize("hasAuthority('read')")
     public ResponseEntity<?> listPartTimers() {
@@ -90,10 +85,23 @@ public class TeacherController extends AbstractController<Teacher, TeacherServic
         }
     }
 
-    /**
-     * 6. Возварщает сотрудника с определенной должностью
-     */
-    @ApiOperation("Возварщает сотрудника с определенной должностью")
+    @ApiOperation("5. Возварщает всех преподавателей, занятых конкретной дисциплиной")
+    @GetMapping("/list_of_engaged_teachers")
+    @PreAuthorize("hasAuthority('read')")
+    public ResponseEntity<?> listEngagedInDiscipline(@RequestParam String discipline) {
+        try {
+            List<Vacancy> vacancies = vacancyService.getAllVacanciesContainsDisciplineName(discipline);
+
+            return ResponseEntity.ok(new ListRes<>(
+                    "Список преподавателей, занятых дисциплиной \"%s\"".formatted(discipline),
+                    service.getTeachersEngagedInVacancies(vacancies)
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new BaseRes(false, e.getMessage()));
+        }
+    }
+
+    @ApiOperation("6. Возварщает сотрудника с определенной должностью")
     @GetMapping("/find_by_certain_position")
     @PreAuthorize("hasAuthority('read')")
     public ResponseEntity<EntityRes<?>> getFromCertainPosition(@RequestParam String position) {
@@ -108,10 +116,7 @@ public class TeacherController extends AbstractController<Teacher, TeacherServic
         }
     }
 
-    /**
-     * 7. Возварщает сотрудников, работающих на определенное совместительство
-     */
-    @ApiOperation("Возварщает сотрудников, работающих на определенное совместительство")
+    @ApiOperation("7. Возварщает сотрудников, работающих на определенное совместительство")
     @GetMapping("/find_part-timers")
     @PreAuthorize("hasAuthority('read')")
     public ResponseEntity<?> listPartTimers(@RequestParam String work) {
@@ -125,10 +130,7 @@ public class TeacherController extends AbstractController<Teacher, TeacherServic
         }
     }
 
-    /**
-     * 8. Возварщает сотрудников, работающих по полному рабочему графику
-     */
-    @ApiOperation("Возварщает сотрудников, работающих по полному рабочему графику")
+    @ApiOperation("8. Возварщает сотрудников, работающих по полному рабочему графику")
     @GetMapping("/find_full-timers")
     @PreAuthorize("hasAuthority('read')")
     public ResponseEntity<?> listFullTimers() {
@@ -142,10 +144,7 @@ public class TeacherController extends AbstractController<Teacher, TeacherServic
         }
     }
 
-    /**
-     * 9. Возварщает всех преподавателей, у которых нагрузка меньше заданной
-     */
-    @ApiOperation("Возварщает всех преподавателей, у которых нагрузка меньше заданной")
+    @ApiOperation("9. Возварщает всех преподавателей, у которых нагрузка меньше заданной")
     @GetMapping("/workload_less_than")
     @PreAuthorize("hasAuthority('read')")
     public ResponseEntity<?> getVacationing(@RequestParam Integer hours) {
@@ -159,10 +158,7 @@ public class TeacherController extends AbstractController<Teacher, TeacherServic
         }
     }
 
-    /**
-     * 10. Возварщает всех преподавателей, у которых нагрузка превысила заданную
-     */
-    @ApiOperation("Возварщает всех преподавателей, у которых нагрузка превысила заданную")
+    @ApiOperation("10. Возварщает всех преподавателей, у которых нагрузка превысила заданную")
     @GetMapping("/workload_exceeded_than")
     @PreAuthorize("hasAuthority('read')")
     public ResponseEntity<?> getProcessing(@RequestParam Integer hours) {
@@ -176,10 +172,7 @@ public class TeacherController extends AbstractController<Teacher, TeacherServic
         }
     }
 
-    /**
-     * 11. Возварщает сотрудников по фамилии
-     */
-    @ApiOperation("Возварщает сотрудников по фамилии")
+    @ApiOperation("11. Возварщает сотрудников по фамилии")
     @GetMapping("/get")
     @PreAuthorize("hasAuthority('read')")
     public ResponseEntity<EntityRes<?>> findByFIO(@RequestParam String fio) {

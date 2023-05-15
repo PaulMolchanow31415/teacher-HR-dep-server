@@ -6,21 +6,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "teacher")
 public class Teacher extends AbstractEmployee {
+    @ApiModelProperty(notes = "Паспорт", required = true)
+    @NotNull
+    @OneToOne
+    protected Passport passport;
+
     @ApiModelProperty(notes = "Занимаемая должность", required = true)
     @NotNull(message = "У преподавателя обязательно поле должности")
     @OneToOne
@@ -39,4 +44,12 @@ public class Teacher extends AbstractEmployee {
     @ApiModelProperty(notes = "Название общественной работы")
     @Length(min = 2, message = "Длина строки общественной работы должна быть не меньше 2 символов")
     private String socialWork;
+
+    @ApiModelProperty(notes = "Список совместительств с основной работой")
+    @ManyToMany(cascade = {PERSIST, MERGE})
+    @JoinTable(name = "employee_moonlighter",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "moonlighter_id")
+    )
+    protected Set<Moonlighter> moonlighters = new HashSet<>();
 }

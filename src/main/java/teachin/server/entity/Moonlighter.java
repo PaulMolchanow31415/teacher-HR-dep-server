@@ -6,15 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "moonlighter")
 public class Moonlighter extends AbstractEntity {
     @ApiModelProperty(notes = "ОГРН", required = true)
     @NotNull
@@ -25,4 +26,8 @@ public class Moonlighter extends AbstractEntity {
     @NotNull
     @Pattern(regexp = "^(\\d{10})|(\\d{12})$", message = "ИНН совместительства может состоять из 10 или 12 цифровых символов")
     private String INN;
+
+    @ApiModelProperty(notes = "Список преподавателей из техникума")
+    @ManyToMany(mappedBy = "moonlighters")
+    private Set<Teacher> teachers = new HashSet<>();
 }
