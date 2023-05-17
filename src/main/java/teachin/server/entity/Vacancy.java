@@ -24,8 +24,8 @@ import static javax.persistence.CascadeType.PERSIST;
 public class Vacancy extends AbstractEntity {
     @ApiModelProperty(notes = "Название", required = true)
     @NotNull
-    @NotBlank(message = "Название вакансии не должно содержать только пробелы")
-    @Length(min = 3, message = "Название вакансии должно содержать не менее 3 символов")
+    @NotBlank(message = "Название должности не должно содержать только пробелы")
+    @Length(min = 3, message = "Название должности должно содержать не менее 3 символов")
     private String name;
 
     @ApiModelProperty(notes = "Список дисциплин")

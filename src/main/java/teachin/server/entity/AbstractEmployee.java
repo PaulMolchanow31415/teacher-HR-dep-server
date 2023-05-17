@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 
 @Getter
 @MappedSuperclass
-public class AbstractEmployee extends AbstractEntity {
+abstract public class AbstractEmployee extends AbstractEntity {
     @ApiModelProperty(notes = "Имя", example = "Иван")
     @NotBlank
     @Pattern(regexp = "^[A-Z|А-Я][a-z|а-я]{2,32}$", message = "Имя сотрудника должно иметь 2 - 32 символов и начинаться с заглавной буквы")

@@ -12,7 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Getter
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable {
+abstract public class AbstractEntity implements Serializable {
     @ApiModelProperty(notes = "Идентификатор")
     @Id
     @GeneratedValue(strategy = IDENTITY)

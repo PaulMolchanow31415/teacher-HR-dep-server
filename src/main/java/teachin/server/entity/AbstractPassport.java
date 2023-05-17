@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Getter
 @MappedSuperclass
-public class AbstractPassport extends AbstractEntity {
+abstract public class AbstractPassport extends AbstractEntity {
     @ApiModelProperty(notes = "Серия", required = true)
     @NotNull
     @Pattern(regexp = "^\\d{4}$", message = "Серия паспорта должна состоять только из 4 цифровых символов")
