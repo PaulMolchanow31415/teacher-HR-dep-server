@@ -1,5 +1,6 @@
 package teachin.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.util.Set;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -46,7 +48,8 @@ public class Teacher extends AbstractEmployee {
     private String socialWork;
 
     @ApiModelProperty(notes = "Список совместительств с основной работой")
-    @ManyToMany(cascade = {PERSIST, MERGE})
+    @JsonIgnore
+    @ManyToMany(cascade = {PERSIST, MERGE}, fetch = LAZY)
     @JoinTable(name = "employee_moonlighter",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "moonlighter_id")

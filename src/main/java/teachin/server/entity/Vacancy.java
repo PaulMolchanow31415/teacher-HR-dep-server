@@ -16,6 +16,7 @@ import java.util.Set;
 
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -31,7 +32,7 @@ public class Vacancy extends AbstractEntity {
     @ApiModelProperty(notes = "Список дисциплин")
     @JsonIgnore
     @Size(min = 1, message = "У должности должна быть хотя бы одна дисциплина")
-    @ManyToMany(cascade = {PERSIST, MERGE})
+    @ManyToMany(cascade = {PERSIST, MERGE}, fetch = LAZY)
     @JoinTable(name = "vacancy_discipline",
             joinColumns = @JoinColumn(name = "vacancy_id"),
             inverseJoinColumns = @JoinColumn(name = "discipline_id")

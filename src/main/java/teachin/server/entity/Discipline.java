@@ -1,5 +1,6 @@
 package teachin.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @AllArgsConstructor
@@ -25,6 +28,7 @@ public class Discipline extends AbstractEntity {
     private String name;
 
     @ApiModelProperty(notes = "Список преподавателей, занятых этой дисциплиной")
-    @ManyToMany(mappedBy = "disciplines")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "disciplines", fetch = LAZY)
     private Set<Vacancy> vacancies = new HashSet<>();
 }
