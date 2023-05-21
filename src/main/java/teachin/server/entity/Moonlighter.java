@@ -13,8 +13,6 @@ import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
 
-import static javax.persistence.FetchType.LAZY;
-
 @Entity
 @Getter
 @AllArgsConstructor
@@ -23,15 +21,15 @@ public class Moonlighter extends AbstractEntity {
     @ApiModelProperty(notes = "ОГРН", required = true)
     @NotNull
     @Pattern(regexp = "^\\d{15}$", message = "ОГРН совместительства должен содержать только 15 цифровых символов")
-    private String OGRN;
+    private String ogrn;
 
     @ApiModelProperty(notes = "ИНН", required = true)
     @NotNull
     @Pattern(regexp = "^(\\d{10})|(\\d{12})$", message = "ИНН совместительства может состоять из 10 или 12 цифровых символов")
-    private String INN;
+    private String inn;
 
     @ApiModelProperty(notes = "Список преподавателей из техникума")
     @JsonIgnore
-    @ManyToMany(mappedBy = "moonlighters", fetch = LAZY)
+    @ManyToMany(mappedBy = "moonlighters")
     private Set<Teacher> teachers = new HashSet<>();
 }

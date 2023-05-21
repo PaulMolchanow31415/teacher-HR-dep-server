@@ -1,15 +1,17 @@
 package teachin.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @MappedSuperclass
@@ -26,13 +28,15 @@ abstract public class AbstractPassport extends AbstractEntity {
 
     @ApiModelProperty(notes = "Дата выдачи", required = true)
     @NotNull
-    @Column(name = "date_of_issue")
-    private Date dateOfIssue;
+    @Column(name = "date_of_issue", columnDefinition = "DATE")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private LocalDate dateOfIssue;
 
     @ApiModelProperty(notes = "Кем был выдан", required = true)
     @NotNull
     @NotBlank(message = "Строка выдачи паспорта не должна содержать только пробелы")
-    @Min(value = 2, message = "Длина строки выдачи паспорта должна быть не меньше 2 и состоять только из непробельных символов")
+    @Length(min = 2, message = "Длина строки выдачи паспорта должна быть не меньше 2 и состоять только из непробельных символов")
     @Column(name = "issuing_authority")
     private String issuingAuthority;
 }

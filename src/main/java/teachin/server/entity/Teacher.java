@@ -1,6 +1,5 @@
 package teachin.server.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,9 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.EnumType.STRING;
-import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Getter
@@ -48,10 +46,10 @@ public class Teacher extends AbstractEmployee {
     private String socialWork;
 
     @ApiModelProperty(notes = "Список совместительств с основной работой")
-    @JsonIgnore
-    @ManyToMany(cascade = {PERSIST, MERGE}, fetch = LAZY)
-    @JoinTable(name = "employee_moonlighter",
-            joinColumns = @JoinColumn(name = "employee_id"),
+    @ManyToMany(cascade = {MERGE}, fetch = EAGER)
+    @JoinTable(
+            name = "teacher_moonlighter",
+            joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "moonlighter_id")
     )
     protected Set<Moonlighter> moonlighters = new HashSet<>();

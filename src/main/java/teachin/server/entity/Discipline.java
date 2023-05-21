@@ -14,8 +14,6 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-import static javax.persistence.FetchType.LAZY;
-
 @Entity
 @Getter
 @AllArgsConstructor
@@ -29,6 +27,6 @@ public class Discipline extends AbstractEntity {
 
     @ApiModelProperty(notes = "Список преподавателей, занятых этой дисциплиной")
     @JsonIgnore
-    @ManyToMany(mappedBy = "disciplines", fetch = LAZY)
+    @ManyToMany(mappedBy = "disciplines")
     private Set<Vacancy> vacancies = new HashSet<>();
 }

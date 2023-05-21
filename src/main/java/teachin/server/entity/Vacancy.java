@@ -15,8 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
-import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Getter
@@ -30,16 +29,17 @@ public class Vacancy extends AbstractEntity {
     private String name;
 
     @ApiModelProperty(notes = "Список дисциплин")
-    @JsonIgnore
     @Size(min = 1, message = "У должности должна быть хотя бы одна дисциплина")
-    @ManyToMany(cascade = {PERSIST, MERGE}, fetch = LAZY)
-    @JoinTable(name = "vacancy_discipline",
+    @ManyToMany(cascade = {MERGE}, fetch = EAGER)
+    @JoinTable(
+            name = "vacancy_discipline",
             joinColumns = @JoinColumn(name = "vacancy_id"),
             inverseJoinColumns = @JoinColumn(name = "discipline_id")
     )
     private Set<Discipline> disciplines = new HashSet<>();
 
     @ApiModelProperty(notes = "Преподаватель")
+    @JsonIgnore
     @OneToOne
     private Teacher teacher;
 }

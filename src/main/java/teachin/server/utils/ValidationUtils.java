@@ -84,11 +84,11 @@ public class ValidationUtils {
     public static void validate(Moonlighter moonlighter) throws ValidationException {
         var errors = new StringJoiner("\n");
 
-        if (moonlighter.getOGRN() == null || !moonlighter.getOGRN().matches(ogrnRegex)) {
+        if (moonlighter.getOgrn() == null || !moonlighter.getOgrn().matches(ogrnRegex)) {
             errors.add("ОГРН совместительства должен содержать только 15 цифровых символов");
         }
 
-        if (moonlighter.getINN() == null || !moonlighter.getINN().matches(innRegex)) {
+        if (moonlighter.getInn() == null || !moonlighter.getInn().matches(innRegex)) {
             errors.add("ИНН совместительства может состоять из 10 или 12 цифровых символов");
         }
 

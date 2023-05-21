@@ -32,7 +32,7 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
     @Override
     public ResponseEntity<BaseRes> getAll() {
         try {
-            return ResponseEntity.ok(new ListRes<>("List %s".formatted(NAME_ENTITY), service.getAll()));
+            return ResponseEntity.ok(new ListRes<>("List " + NAME_ENTITY, service.getAll()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new BaseRes(false, e.getMessage()));
         }
@@ -42,7 +42,7 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
     public ResponseEntity<BaseRes> update(E entity) {
         try {
             service.write(entity);
-            return ResponseEntity.ok(new BaseRes(true, "Changes have been made to the %s".formatted(NAME_ENTITY)));
+            return ResponseEntity.ok(new BaseRes(true, "Changes have been made to the " + NAME_ENTITY));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new BaseRes(false, e.getMessage()));
         }
